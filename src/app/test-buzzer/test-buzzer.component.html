@@ -2,18 +2,18 @@
 
 <div class="controller-view">
   <div class="buzzer buzzer-1">
-    <button #buzzer1Red type="button" class="btn red" (click)="handleClick()"></button>
-    <button #buzzer1Orange type="button" class="btn orange"></button>
-    <button #buzzer1Blue type="button" class="btn blue"></button>
-    <button #buzzer1Green type="button" class="btn green"></button>
-    <button #buzzer1Yellow type="button" class="btn yellow"></button>
+    <button #buzzer1Red type="button" class="btn red" [class.pressed]="bz1RedPressed"></button>
+    <button #buzzer1Orange type="button" class="btn orange" [class.pressed]="bz1OrangePressed"></button>
+    <button #buzzer1Blue type="button" class="btn blue" [class.pressed]="bz1BluePressed"></button>
+    <button #buzzer1Green type="button" class="btn green" [class.pressed]="bz1GreenPressed"></button>
+    <button #buzzer1Yellow type="button" class="btn yellow" [class.pressed]="bz1YellowPressed"></button>
   </div>
 
   <div class="buzzer buzzer-2">
-    <button #buzzer2Red type="button" class="btn red"></button>
-    <button #buzzer2Orange type="button" class="btn orange"></button>
-    <button #buzzer2Blue type="button" class="btn blue"></button>
-    <button #buzzer2Green type="button" class="btn green"></button>
-    <button #buzzer2Yellow type="button" class="btn yellow"></button>
+    <button #buzzer2Red type="button" class="btn red" [class.pressed]="bz2RedPressed"></button>
+    <button #buzzer2Orange type="button" class="btn orange" [class.pressed]="bz2OrangePressed"></button>
+    <button #buzzer2Blue type="button" class="btn blue" [class.pressed]="bz2BluePressed"></button>
+    <button #buzzer2Green type="button" class="btn green" [class.pressed]="bz2GreenPressed"></button>
+    <button #buzzer2Yellow type="button" class="btn yellow" [class.pressed]="bz2YellowPressed"></button>
   </div>
 </div>
