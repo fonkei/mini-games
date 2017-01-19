@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { KeyboardManager } from './KeyboardManager';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,13 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'app works!';
 
+  constructor(private keyboardManager: KeyboardManager) {
+
+  }
+
   hotkeys(event) {
     console.log(event.keyCode);
+
+    console.log("KEYS", this.keyboardManager.getKeys());
   }
 }
