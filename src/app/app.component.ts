@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { KeyboardManager } from './KeyboardManager';
+import { Buzzer } from './buzzer'
 
 @Component({
   selector: 'app-root',
@@ -9,13 +10,16 @@ import { KeyboardManager } from './KeyboardManager';
 export class AppComponent implements OnDestroy {
   title = 'app works!';
   private gameStarted: boolean = false;
-  private buzzers: any;
+
+  private buzzer1: Buzzer;
+  private buzzer2: Buzzer;
+  private buzzers: Buzzer[];
 
   constructor(private keyboardManager: KeyboardManager) {
-    this.buzzers = [
-      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
-      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
-    ];
+    this.buzzer1 = new Buzzer();
+    this.buzzer2 = new Buzzer();
+
+    this.buzzers = [this.buzzer1, this.buzzer1];
 
     keyboardManager.keyDown.subscribe(bzrs => this.buzzers = bzrs);
     keyboardManager.keyUp.subscribe(bzrs => this.buzzers = bzrs);
@@ -24,7 +28,7 @@ export class AppComponent implements OnDestroy {
   }
 
   start(): void {
-    
+
   }
 
   ngOnDestroy(): void {

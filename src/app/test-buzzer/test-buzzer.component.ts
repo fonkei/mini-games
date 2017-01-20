@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { KeyboardManager } from '../KeyboardManager';
+import { Buzzer } from '../buzzer';
 
 
 @Component({
@@ -8,16 +9,21 @@ import { KeyboardManager } from '../KeyboardManager';
   styleUrls: ['./test-buzzer.component.css']
 })
 export class TestBuzzerComponent implements OnDestroy {
-  buzzers: any;
+  private buzzer1: Buzzer;
+  private buzzer2: Buzzer;
 
   constructor(private keyboardManager: KeyboardManager) {
-    this.buzzers = [
-      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
-      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
-    ];
+    this.buzzer1 = new Buzzer();
+    this.buzzer2 = new Buzzer();
 
-    keyboardManager.keyDown.subscribe(bzrs => this.buzzers = bzrs);
-    keyboardManager.keyUp.subscribe(bzrs => this.buzzers = bzrs);
+    keyboardManager.keyDown.subscribe(bzrs => {
+      this.buzzer1 = bzrs[0];
+      this.buzzer2 = bzrs[1];
+    });
+    keyboardManager.keyUp.subscribe(bzrs => {
+      this.buzzer1 = bzrs[0];
+      this.buzzer2 = bzrs[1];
+    });
   }
 
   ngOnDestroy(): void {

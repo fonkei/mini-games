@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Rx'
 import { Injectable } from '@angular/core';
+import { Buzzer } from './buzzer';
 
 @Injectable()
 export class KeyboardManager {
@@ -15,15 +16,16 @@ export class KeyboardManager {
   public static readonly BZ2_GREEN = 57;
   public static readonly BZ2_YELLOW = 48;
 
-  private buzzers: any;
+  private buzzer1: Buzzer;
+  private buzzer2: Buzzer;
+  private buzzers: Buzzer[];
   public keyDown: any;
   public keyUp: any;
 
   constructor() {
-    this.buzzers = [
-      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
-      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
-    ];
+    this.buzzer1 = new Buzzer();
+    this.buzzer2 = new Buzzer();
+    this.buzzers = [this.buzzer1, this.buzzer2];
 
     this.keyDown = Observable.fromEvent(window, 'keydown')
       .filter((k: any) => k.which >= 48 && k.which <= 57)
@@ -38,34 +40,34 @@ export class KeyboardManager {
   handleKeys(event) {
     switch (event.keyCode) {
       case KeyboardManager.BZ1_RED:
-        this.buzzers[0].red = event.type === "keydown";
+        this.buzzer1.red = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_ORANGE:
-        this.buzzers[0].orange = event.type === "keydown";
+        this.buzzer1.orange = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_BLUE:
-        this.buzzers[0].blue = event.type === "keydown";
+        this.buzzer1.blue = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_GREEN:
-        this.buzzers[0].green = event.type === "keydown";
+        this.buzzer1.green = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_YELLOW:
-        this.buzzers[0].yellow = event.type === "keydown";
+        this.buzzer1.yellow = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_RED:
-        this.buzzers[1].red = event.type === "keydown";
+        this.buzzer2.red = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_ORANGE:
-        this.buzzers[1].orange = event.type === "keydown";
+        this.buzzer2.orange = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_BLUE:
-        this.buzzers[1].blue = event.type === "keydown";
+        this.buzzer2.blue = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_GREEN:
-        this.buzzers[1].green = event.type === "keydown";
+        this.buzzer2.green = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_YELLOW:
-        this.buzzers[1].yellow = event.type === "keydown";
+        this.buzzer2.yellow = event.type === "keydown";
         break;
       default:
         break;
