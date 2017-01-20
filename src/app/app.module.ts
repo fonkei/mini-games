@@ -20,4 +20,5 @@ import { KeyboardManager } from './KeyboardManager';
   providers: [KeyboardManager],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

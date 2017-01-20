@@ -1,4 +1,5 @@
-import { Injectable, HostListener } from '@angular/core';
+import { Observable } from 'rxjs/Rx'
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class KeyboardManager {
@@ -14,107 +15,62 @@ export class KeyboardManager {
   public static readonly BZ2_GREEN = 57;
   public static readonly BZ2_YELLOW = 48;
 
-  buzzer1: boolean[] = [];
-
-  bz1RedPressed = false;
-  bz1OrangePressed = false;
-  bz1BluePressed = false;
-  bz1GreenPressed = false;
-  bz1YellowPressed = false;
-  bz2RedPressed = false;
-  bz2OrangePressed = false;
-  bz2BluePressed = false;
-  bz2GreenPressed = false;
-  bz2YellowPressed = false;
+  private buzzers: any;
+  public keyDown: any;
+  public keyUp: any;
 
   constructor() {
-    this.buzzer1 = [
-      this.bz1RedPressed,
-      this.bz1OrangePressed,
-      this.bz1BluePressed,
-      this.bz1GreenPressed,
-      this.bz1YellowPressed
+    this.buzzers = [
+      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
+      [{ red: false }, { orange: false }, { blue: false }, { green: false }, { yellow: false }],
     ];
+
+    this.keyDown = Observable.fromEvent(window, 'keydown')
+      .filter((k: any) => k.which >= 48 && k.which <= 57)
+      .map((k: any) => this.handleKeys(k));
+
+    this.keyUp = Observable.fromEvent(window, 'keyup')
+      .filter((k: any) => k.which >= 48 && k.which <= 57)
+      .map((k: any) => this.handleKeys(k));
+
   }
 
-  @HostListener('window:keydown', ['$event'])
-  handleKeydown(event) {
-    console.log("EVENT");
+  handleKeys(event) {
     switch (event.keyCode) {
       case KeyboardManager.BZ1_RED:
-        this.bz1RedPressed = true;
+        this.buzzers[0].red = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_ORANGE:
-        this.bz1OrangePressed = true;
+        this.buzzers[0].orange = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_BLUE:
-        this.bz1BluePressed = true;
+        this.buzzers[0].blue = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_GREEN:
-        this.bz1GreenPressed = true;
+        this.buzzers[0].green = event.type === "keydown";
         break;
       case KeyboardManager.BZ1_YELLOW:
-        this.bz1YellowPressed = true;
+        this.buzzers[0].yellow = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_RED:
-        this.bz2RedPressed = true;
+        this.buzzers[1].red = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_ORANGE:
-        this.bz2OrangePressed = true;
+        this.buzzers[1].orange = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_BLUE:
-        this.bz2BluePressed = true;
+        this.buzzers[1].blue = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_GREEN:
-        this.bz2GreenPressed = true;
+        this.buzzers[1].green = event.type === "keydown";
         break;
       case KeyboardManager.BZ2_YELLOW:
-        this.bz2YellowPressed = true;
+        this.buzzers[1].yellow = event.type === "keydown";
         break;
       default:
         break;
     }
-  }
 
-  @HostListener('window:keyup', ['$event'])
-  handleKeyup(event) {
-    switch (event.keyCode) {
-      case KeyboardManager.BZ1_RED:
-        this.bz1RedPressed = false;
-        break;
-      case KeyboardManager.BZ1_ORANGE:
-        this.bz1OrangePressed = false;
-        break;
-      case KeyboardManager.BZ1_BLUE:
-        this.bz1BluePressed = false;
-        break;
-      case KeyboardManager.BZ1_GREEN:
-        this.bz1GreenPressed = false;
-        break;
-      case KeyboardManager.BZ1_YELLOW:
-        this.bz1YellowPressed = false;
-        break;
-      case KeyboardManager.BZ2_RED:
-        this.bz2RedPressed = false;
-        break;
-      case KeyboardManager.BZ2_ORANGE:
-        this.bz2OrangePressed = false;
-        break;
-      case KeyboardManager.BZ2_BLUE:
-        this.bz2BluePressed = false;
-        break;
-      case KeyboardManager.BZ2_GREEN:
-        this.bz2GreenPressed = false;
-        break;
-      case KeyboardManager.BZ2_YELLOW:
-        this.bz2YellowPressed = false;
-        break;
-      default:
-        break;
-    }
-  }
-
-  public getKeys(): boolean[] {
-    return this.buzzer1;
+    return this.buzzers;
   }
 }
