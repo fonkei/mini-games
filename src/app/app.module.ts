@@ -9,12 +9,15 @@ import { KeyboardManager } from './KeyboardManager';
 
 import { routing } from './app.routing';
 import { ShapeCounterComponent } from './shape-counter/shape-counter.component';
+import { GameService } from "./game.service";
+import { ReactionComponent } from './reaction/reaction.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestBuzzerComponent,
-    ShapeCounterComponent
+    ShapeCounterComponent,
+    ReactionComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,7 @@ import { ShapeCounterComponent } from './shape-counter/shape-counter.component';
     HttpModule,
     routing,
   ],
-  providers: [KeyboardManager],
+  providers: [KeyboardManager, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

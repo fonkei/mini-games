@@ -2,6 +2,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TestBuzzerComponent } from './test-buzzer/test-buzzer.component';
 import { ShapeCounterComponent } from './shape-counter/shape-counter.component';
+import { ReactionComponent } from "./reaction/reaction.component";
 
 const appRoutes: Routes = [
   {
@@ -16,6 +17,10 @@ const appRoutes: Routes = [
   {
     path: 'shape-counter',
     component: ShapeCounterComponent
+  },
+  {
+    path: 'reaction',
+    component: ReactionComponent
   }
 ];
 
