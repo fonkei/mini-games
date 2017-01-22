@@ -11,13 +11,15 @@ import { routing } from './app.routing';
 import { ShapeCounterComponent } from './shape-counter/shape-counter.component';
 import { GameService } from "./game.service";
 import { ReactionComponent } from './reaction/reaction.component';
+import { CountdownComponent } from './countdown/countdown.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestBuzzerComponent,
     ShapeCounterComponent,
-    ReactionComponent
+    ReactionComponent,
+    CountdownComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,7 @@ import { ReactionComponent } from './reaction/reaction.component';
     HttpModule,
     routing,
   ],
-  providers: [KeyboardManager, GameService],
+  providers: [KeyboardManager, GameService, CountdownComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

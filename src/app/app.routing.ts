@@ -7,7 +7,7 @@ import { ReactionComponent } from "./reaction/reaction.component";
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'test-buzzer',
+    redirectTo: 'shape-counter',
     pathMatch: 'full'
   },
   {

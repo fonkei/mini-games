@@ -21,7 +21,8 @@ export class AppComponent implements OnDestroy {
   private buzzer2: Buzzer;
   private buzzers: Buzzer[];
 
-  private gameRoutes: string[] = ["/test-buzzer", "/shape-counter", "/reaction"];
+  //private gameRoutes: string[] = ["/test-buzzer", "/shape-counter", "/reaction"];
+  private gameRoutes: string[] = ["/shape-counter"];
 
   constructor(private keyboardManager: KeyboardManager, private router: Router, private gameService: GameService) {
     this.buzzer1 = new Buzzer();
@@ -32,6 +33,7 @@ export class AppComponent implements OnDestroy {
     this.keyUpSub = keyboardManager.keyUp.subscribe(bzrs => this.buzzers = bzrs);
 
     this.start();
+
   }
 
   private start(): void {

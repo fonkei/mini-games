@@ -1,3 +1,9 @@
 <p>
   shape-counter works!
 </p>
+
+<p *ngIf="isCountingEnabled">{{player1Counter}}</p>
+<canvas #shapeCounterCanvas></canvas>
+<p *ngIf="isCountingEnabled">{{player2Counter}}</p>
+
+<countdown #countdown></countdown>
