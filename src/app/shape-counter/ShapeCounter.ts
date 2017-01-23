@@ -9,7 +9,8 @@ export class Shape {
   width: number;
   height: number;
   maxParticles: number;
-  particleType: any;
+  particleType: number;
+  particleColor: number;
   color: any;
 
   x: number;
@@ -17,13 +18,14 @@ export class Shape {
   r: number;
   d: number;
 
-  constructor(_ctx: any, _width: number, _height: number, _maxParticles: number, _particleType: any) {
+  constructor(_ctx: any, _width: number, _height: number, _maxParticles: number, _particleType: number, _particleColor:number) {
     this.ctx = _ctx;
     this.width = _width;
     this.height = _height;
     this.maxParticles = _maxParticles;
     this.particleType = _particleType;
-    this.color = COLORS[Math.floor(Math.random() * 3)];
+    this.particleColor = _particleColor;
+    this.color = COLORS[this.particleColor];
 
     this.x = Math.random() * (_width - 100) + 40;
     this.y = -10;

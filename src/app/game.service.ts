@@ -33,23 +33,19 @@ export class GameService implements OnDestroy {
   }
 
   addPlayer1Point(): void {
-    if (this.loadedGame.player1points < this.loadedGame.maxPoints)
-      this.loadedGame.player1points++;
+    this.loadedGame.addPlayer1Point();
   }
 
   addPlayer2Point(): void {
-    if (this.loadedGame.player2points < this.loadedGame.maxPoints)
-      this.loadedGame.player2points++;
+    this.loadedGame.addPlayer2Point();
   }
 
   reducePlayer1Point(): void {
-    if (this.loadedGame.player1points > 0)
-      this.loadedGame.player1points--;
+    this.loadedGame.reducePlayer1Point();
   }
 
   reducePlayer2Point(): void {
-    if (this.loadedGame.player2points > 0)
-      this.loadedGame.player2points--;
+    this.loadedGame.reducePlayer2Point();
   }
 
   ngOnDestroy(): void {

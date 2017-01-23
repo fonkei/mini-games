@@ -25,6 +25,8 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   private currShapeIndex: number = 0;
   private typeToCount: number;
   private isCountingEnabled: boolean = false;
+  private wantedShapeType: number;
+  private wantedShapeColor: number;
 
   private buzzer1: Buzzer;
   private buzzer2: Buzzer;
@@ -80,10 +82,14 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
     this.player1Counter = 0;
     this.player2Counter = 0;
 
+    this.wantedShapeType = Math.floor(Math.random() * 2 + 1);
+    this.wantedShapeColor = Math.floor(Math.random() * 3);
+
     this.interval = setInterval(() => {
       if (this.currShapeIndex < this.maxShapes) {
         let type = Math.floor(Math.random() * 2 + 1);
-        this.shapes.push(new Shape(this.context, this.width, this.height, this.shapes.length, type));
+        let color = Math.floor(Math.random() * 3);
+        this.shapes.push(new Shape(this.context, this.width, this.height, this.shapes.length, type, color));
         this.currShapeIndex++;
       }
       else {
@@ -100,7 +106,8 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
 
   onCountdownEnded(): void {
     this.isCountingEnabled = false;
-    let wantedShapes = this.shapes.filter((shape: Shape) => shape.particleType == 1);
+    let wantedShapes = this.shapes.filter((shape: Shape) => shape.particleType == this.wantedShapeType && shape.particleColor == this.wantedShapeColor);
+    console.log(wantedShapes.length);
 
     if (this.player1Counter === wantedShapes.length)
       this.gameService.addPlayer1Point();
@@ -110,6 +117,8 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       this.gameService.addPlayer2Point();
     else
       this.gameService.reducePlayer2Point();
+
+    console.log(this.gameService.loadedGame.player1points);
 
     this.newGame();
   }
@@ -127,6 +136,12 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       this.shapes[key].update();
       this.shapes[key].draw();
     }
+  }
+
+  getWantedShapeText(): string {
+    let text = '';
+    text += this.wantedShapeType == 1 ? 'Kreis' : 'Quadrat';
+    return text;
   }
 
   ngOnDestroy(): void {
