@@ -13,11 +13,11 @@ export class Shape {
   color: any;
 
   x: number;
-  y:number;
-  r:number;
-  d:number;
+  y: number;
+  r: number;
+  d: number;
 
-  constructor(_ctx: any, _width: number, _height: number, _maxParticles: number, _particleType:any) {
+  constructor(_ctx: any, _width: number, _height: number, _maxParticles: number, _particleType: any) {
     this.ctx = _ctx;
     this.width = _width;
     this.height = _height;
@@ -25,8 +25,8 @@ export class Shape {
     this.particleType = _particleType;
     this.color = COLORS[Math.floor(Math.random() * 3)];
 
-    this.x = Math.random() * _width;
-    this.y = - 10;
+    this.x = Math.random() * (_width - 100) + 40;
+    this.y = -10;
     this.r = Math.random() * 20 + 1;
     this.d = Math.random() * _maxParticles;
   }
@@ -36,7 +36,7 @@ export class Shape {
     this.x += Math.sin(0) * 2;
   };
 
-  draw() : void {
+  draw(): void {
     this.ctx.save();
     this.ctx.strokeStyle = "rgba(" + this.color + ", 1.0)";
     this.ctx.fillStyle = this.ctx.strokeStyle;

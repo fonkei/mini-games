@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Subscription, Observable } from "rxjs/Rx";
 
 @Component({
@@ -11,6 +11,7 @@ export class CountdownComponent {
   public count = 5;
   private timer: any;
   private timerSub: Subscription;
+  @Output() countDownEnded = new EventEmitter();
 
   startTimer(seconds: number): void {
     this.count = seconds;
@@ -20,6 +21,7 @@ export class CountdownComponent {
       this.count = seconds - t;
       if(t == seconds) {
         this.showTimer = false;
+        this.countDownEnded.emit();
         this.timerSub.unsubscribe();
       }
     });

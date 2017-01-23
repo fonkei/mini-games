@@ -6,4 +6,4 @@
 <canvas #shapeCounterCanvas></canvas>
 <p *ngIf="isCountingEnabled">{{player2Counter}}</p>
 
-<countdown #countdown></countdown>
+<countdown #countdown (countDownEnded)="onCountdownEnded()"></countdown>

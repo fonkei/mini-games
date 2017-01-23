@@ -1,11 +1,11 @@
-import {Component, ViewChild, AfterViewInit, ElementRef, OnDestroy} from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { GameService } from '../game.service';
 import { Game } from '../game';
 import { Shape } from './ShapeCounter';
 import { CountdownComponent } from '../countdown/countdown.component';
 import { KeyboardManager } from "../KeyboardManager";
-import {Buzzer} from "../buzzer";
-import {Subscription} from "rxjs";
+import { Buzzer } from "../buzzer";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-shape-counter',
@@ -29,7 +29,6 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   private buzzer1: Buzzer;
   private buzzer2: Buzzer;
   private keyDownSub: Subscription;
-  private keyUpSub: Subscription;
 
   private player1Counter: number = 0;
   private player2Counter: number = 0;
@@ -45,8 +44,12 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       this.buzzer1 = bzrs[0];
       this.buzzer2 = bzrs[1];
 
-      if(this.buzzer1.red && this.isCountingEnabled) {this.player1Counter++;}
-      if(this.buzzer2.red && this.isCountingEnabled) {this.player2Counter++;}
+      if (this.buzzer1.red && this.isCountingEnabled) {
+        this.player1Counter++;
+      }
+      if (this.buzzer2.red && this.isCountingEnabled) {
+        this.player2Counter++;
+      }
     });
 
     this.gameStarted = true;
@@ -74,9 +77,11 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   newGame(): void {
     this.shapes = [];
     this.currShapeIndex = 0;
+    this.player1Counter = 0;
+    this.player2Counter = 0;
 
     this.interval = setInterval(() => {
-      if(this.currShapeIndex < this.maxShapes) {
+      if (this.currShapeIndex < this.maxShapes) {
         let type = Math.floor(Math.random() * 2 + 1);
         this.shapes.push(new Shape(this.context, this.width, this.height, this.shapes.length, type));
         this.currShapeIndex++;
@@ -91,11 +96,19 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   startCounting(): void {
     this.isCountingEnabled = true;
     this.countdown.startTimer(5);
-    this.newGame();
+  }
+
+  onCountdownEnded(): void {
+    this.isCountingEnabled = false;
+    let wantedShapes = this.shapes.filter((shape: Shape) => shape.particleType == 1);
+    console.log(this.player1Counter === wantedShapes.length ? "RICHTSCH" : "FALSCH", wantedShapes.length);
+    //this.newGame();
   }
 
   tick(): void {
-    requestAnimationFrame(() => {this.tick()});
+    requestAnimationFrame(() => {
+      this.tick()
+    });
     this.context.clearRect(0, 0, this.width, this.height);
     this.draw();
   }
