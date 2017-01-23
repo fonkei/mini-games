@@ -33,7 +33,7 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   private player1Counter: number = 0;
   private player2Counter: number = 0;
 
-  private game: Game = new Game("ShapeCounter", 3, 5000);
+  private game: Game = new Game("ShapeCounter", 3, 0);
   @ViewChild('countdown') countdown: CountdownComponent;
 
   constructor(private gameService: GameService, private keyboardManager: KeyboardManager) {
@@ -101,8 +101,17 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   onCountdownEnded(): void {
     this.isCountingEnabled = false;
     let wantedShapes = this.shapes.filter((shape: Shape) => shape.particleType == 1);
-    console.log(this.player1Counter === wantedShapes.length ? "RICHTSCH" : "FALSCH", wantedShapes.length);
-    //this.newGame();
+
+    if (this.player1Counter === wantedShapes.length)
+      this.gameService.addPlayer1Point();
+    else
+      this.gameService.reducePlayer1Point();
+    if (this.player2Counter === wantedShapes.length)
+      this.gameService.addPlayer2Point();
+    else
+      this.gameService.reducePlayer2Point();
+
+    this.newGame();
   }
 
   tick(): void {
