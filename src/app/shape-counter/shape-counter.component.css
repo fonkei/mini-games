@@ -1,5 +1,77 @@
 canvas {
   border: solid 2px red;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -250px;
+}
+
+.description {
+  text-align: center;
+}
+
+#player1-counter {
+  float: left;
+  margin-left: 50px;
+  margin-top: 250px;
+}
+
+#player2-counter {
+  float: right;
+  margin-right: 50px;
+  margin-top: 250px;
+}
+
+#wanted-shape-text {
+  font-size: 25px;
   display: block;
-  margin: auto;
+  text-align: center;
+}
+
+countdown {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -15px;
+  margin-top: -30px;
+}
+
+.btn {
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  outline: none;
+  border: none;
+  box-shadow: 0 6px #999;
+  transition-duration: 0s;
+}
+
+.btn:active, .btn.pressed {
+  box-shadow: 0 3px #777;
+  transition-duration: 0s;
+  transform: translateY(2px);
+}
+
+.btn.red {
+  background-color: red;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+#player1-score {
+  font-size: 20px;
+  float: left;
+  margin-left: 50px;
+  margin-top: 400px;
+}
+
+#player2-score {
+  float: right;
+  margin-right: 50px;
+  margin-top: 400px;
+  font-size: 20px;
 }

@@ -48,6 +48,14 @@ export class GameService implements OnDestroy {
     this.loadedGame.reducePlayer2Point();
   }
 
+  getPlayer1Score(): number {
+    return this.loadedGame.player1points;
+  }
+
+  getPlayer2Score(): number {
+    return this.loadedGame.player2points;
+  }
+
   ngOnDestroy(): void {
     clearTimeout(this.timeout);
   }

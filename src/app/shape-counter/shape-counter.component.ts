@@ -23,7 +23,6 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   private context: CanvasRenderingContext2D;
   private maxShapes: number;
   private currShapeIndex: number = 0;
-  private typeToCount: number;
   private isCountingEnabled: boolean = false;
   private wantedShapeType: number;
   private wantedShapeColor: number;
@@ -31,20 +30,27 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   private buzzer1: Buzzer;
   private buzzer2: Buzzer;
   private keyDownSub: Subscription;
+  private keyUpSub: Subscription;
 
   private player1Counter: number = 0;
   private player2Counter: number = 0;
 
   private game: Game = new Game("ShapeCounter", 3, 0);
-  @ViewChild('countdown') countdown: CountdownComponent;
 
-  constructor(private gameService: GameService, private keyboardManager: KeyboardManager) {
+  @ViewChild('countdown') countdown: CountdownComponent;
+  @ViewChild('startCountdown') startCountdown: CountdownComponent;
+
+  constructor(public gameService: GameService, private keyboardManager: KeyboardManager) {
     this.buzzer1 = new Buzzer();
     this.buzzer2 = new Buzzer();
 
     this.keyDownSub = keyboardManager.keyDown.subscribe(bzrs => {
       this.buzzer1 = bzrs[0];
       this.buzzer2 = bzrs[1];
+
+      if (!this.gameStarted && (this.buzzer1.red || this.buzzer2.red) ) {
+        this.startCountdown.startTimer(5);
+      }
 
       if (this.buzzer1.red && this.isCountingEnabled) {
         this.player1Counter++;
@@ -54,7 +60,11 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.gameStarted = true;
+    this.keyUpSub = keyboardManager.keyUp.subscribe(bzrs => {
+      this.buzzer1 = bzrs[0];
+      this.buzzer2 = bzrs[1];
+    });
+
     this.gameService.loadGame(this.game);
   }
 
@@ -71,12 +81,12 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
     this.maxShapes = 40;
     this.shapes = [];
 
-    this.typeToCount = Math.floor(Math.random() * 2 + 1);
-    this.newGame();
     this.tick();
   }
 
   newGame(): void {
+    this.gameStarted = true;
+
     this.shapes = [];
     this.currShapeIndex = 0;
     this.player1Counter = 0;
@@ -89,7 +99,12 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       if (this.currShapeIndex < this.maxShapes) {
         let type = Math.floor(Math.random() * 2 + 1);
         let color = Math.floor(Math.random() * 3);
-        this.shapes.push(new Shape(this.context, this.width, this.height, this.shapes.length, type, color));
+        let shape = new Shape(this.context, this.width, this.height, this.shapes.length, type, color);
+        this.shapes.push(shape);
+
+        if(this.wantedShapeColor === color && this.wantedShapeType === type)
+          console.log("JETZT");
+
         this.currShapeIndex++;
       }
       else {
@@ -113,13 +128,16 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       this.gameService.addPlayer1Point();
     else
       this.gameService.reducePlayer1Point();
+
     if (this.player2Counter === wantedShapes.length)
       this.gameService.addPlayer2Point();
     else
       this.gameService.reducePlayer2Point();
 
-    console.log(this.gameService.loadedGame.player1points);
+    this.newGame();
+  }
 
+  onStartCountdownEnded(): void {
     this.newGame();
   }
 
@@ -140,11 +158,13 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
 
   getWantedShapeText(): string {
     let text = '';
-    text += this.wantedShapeType == 1 ? 'Kreis' : 'Quadrat';
+    text += this.wantedShapeColor == 0 ? 'roten ' : this.wantedShapeColor == 1 ? 'grünen ' : 'blauen ';
+    text += this.wantedShapeType == 1 ? 'Kreise' : 'Quadrate';
     return text;
   }
 
   ngOnDestroy(): void {
     this.keyDownSub.unsubscribe();
+    this.keyUpSub.unsubscribe();
   }
 }

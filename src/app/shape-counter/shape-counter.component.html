@@ -1,10 +1,19 @@
-<p>
-  shape-counter works!
-</p>
+<div *ngIf="!gameStarted" class="description">
+  <h1>Formen Zählen</h1>
+  <p></p>
+</div>
 
-<p *ngIf="isCountingEnabled">{{player1Counter}}</p>
-{{getWantedShapeText()}}
-<canvas #shapeCounterCanvas></canvas>
-<p *ngIf="isCountingEnabled">{{player2Counter}}</p>
+<countdown #startCountdown (countDownEnded)="onStartCountdownEnded()"></countdown>
 
-<countdown #countdown (countDownEnded)="onCountdownEnded()"></countdown>
+<div [hidden]="!gameStarted">
+  <button id="player1-counter" *ngIf="isCountingEnabled" type="button" class="btn red" [class.pressed]="buzzer1.red"></button>
+  <button id="player2-counter" *ngIf="isCountingEnabled" type="button" class="btn red" [class.pressed]="buzzer2.red"></button>
+
+  <div id="wanted-shape-text">Zähle alle {{getWantedShapeText()}}</div>
+  <canvas #shapeCounterCanvas></canvas>
+
+  <div id="player1-score">{{gameService.getPlayer1Score()}}</div>
+  <div id="player2-score">{{gameService.getPlayer2Score()}}</div>
+</div>
+
+<countdown *ngIf="gameStarted" #countdown (countDownEnded)="onCountdownEnded()"></countdown>
