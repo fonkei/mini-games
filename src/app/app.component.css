@@ -1,5 +1,9 @@
+body {
+  background-color: rgb(22, 22, 22);
+}
+
 .app-header {
-  background-color: #777777;
+  background-color: #000;
   color: ghostwhite;
   font-weight: bold;
   height: 30px;
