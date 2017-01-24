@@ -17,8 +17,9 @@ export class Shape {
   y: number;
   r: number;
   d: number;
+  speed: number
 
-  constructor(_ctx: any, _width: number, _height: number, _maxParticles: number, _particleType: number, _particleColor:number) {
+  constructor(_ctx: any, _width: number, _height: number, _maxParticles: number, _particleType: number, _particleColor: number, _speedFactor: number) {
     this.ctx = _ctx;
     this.width = _width;
     this.height = _height;
@@ -31,15 +32,17 @@ export class Shape {
     this.y = -10;
     this.r = Math.random() * 20 + 1;
     this.d = Math.random() * _maxParticles;
+
+    this.speed = _speedFactor;
   }
 
   update(): void {
-    this.y += Math.cos(this.d) + 1 + (this.r / 2);
+    this.y += Math.cos(this.d) + this.speed + (this.r / 2);
     this.x += Math.sin(0) * 2;
   };
 
   draw(): void {
-    this.ctx.save();
+    //this.ctx.save();
     this.ctx.strokeStyle = "rgba(" + this.color + ", 1.0)";
     this.ctx.fillStyle = this.ctx.strokeStyle;
     this.ctx.beginPath();
@@ -65,6 +68,6 @@ export class Shape {
       }
     }
 
-    this.ctx.restore();
+    //this.ctx.restore();
   };
 }

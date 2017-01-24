@@ -3,8 +3,6 @@
   <p></p>
 </div>
 
-<countdown #startCountdown (countDownEnded)="onStartCountdownEnded()"></countdown>
-
 <div [hidden]="!gameStarted">
   <button id="player1-counter" *ngIf="isCountingEnabled" type="button" class="btn red" [class.pressed]="buzzer1.red"></button>
   <button id="player2-counter" *ngIf="isCountingEnabled" type="button" class="btn red" [class.pressed]="buzzer2.red"></button>
@@ -16,4 +14,5 @@
   <div id="player2-score">{{gameService.getPlayer2Score()}}</div>
 </div>
 
+<countdown #startCountdown (countDownEnded)="onStartCountdownEnded()"></countdown>
 <countdown *ngIf="gameStarted" #countdown (countDownEnded)="onCountdownEnded()"></countdown>

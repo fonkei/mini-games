@@ -48,7 +48,7 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       this.buzzer1 = bzrs[0];
       this.buzzer2 = bzrs[1];
 
-      if (!this.gameStarted && (this.buzzer1.red || this.buzzer2.red) ) {
+      if (!this.gameStarted && (this.buzzer1.red || this.buzzer2.red)) {
         this.startCountdown.startTimer(5);
       }
 
@@ -69,16 +69,15 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    let canvas = this.canvas.nativeElement;
-    this.context = canvas.getContext("2d");
-
     this.width = 500;
     this.height = 500;
 
+    let canvas = this.canvas.nativeElement;
     this.canvas.nativeElement.width = this.width;
     this.canvas.nativeElement.height = this.height;
+    this.context = canvas.getContext("2d");
 
-    this.maxShapes = 40;
+    this.maxShapes = 80;
     this.shapes = [];
 
     this.tick();
@@ -99,11 +98,10 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       if (this.currShapeIndex < this.maxShapes) {
         let type = Math.floor(Math.random() * 2 + 1);
         let color = Math.floor(Math.random() * 3);
-        let shape = new Shape(this.context, this.width, this.height, this.shapes.length, type, color);
-        this.shapes.push(shape);
+        let speedFactor = 10;
 
-        if(this.wantedShapeColor === color && this.wantedShapeType === type)
-          console.log("JETZT");
+        let shape = new Shape(this.context, this.width, this.height, this.shapes.length, type, color, speedFactor);
+        this.shapes.push(shape);
 
         this.currShapeIndex++;
       }
@@ -122,7 +120,6 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
   onCountdownEnded(): void {
     this.isCountingEnabled = false;
     let wantedShapes = this.shapes.filter((shape: Shape) => shape.particleType == this.wantedShapeType && shape.particleColor == this.wantedShapeColor);
-    console.log(wantedShapes.length);
 
     if (this.player1Counter === wantedShapes.length)
       this.gameService.addPlayer1Point();
