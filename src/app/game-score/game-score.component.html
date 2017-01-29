@@ -1,0 +1,5 @@
+<ngb-rating [(rate)]="rate" [max]="max" [readonly]="true">
+  <template let-fill="fill">
+    <span class="dot" [class.filled]="fill === 100">&#9679;</span>
+  </template>
+</ngb-rating>
