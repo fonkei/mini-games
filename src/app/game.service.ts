@@ -34,10 +34,16 @@ export class GameService implements OnDestroy {
 
   addPlayer1Point(): void {
     this.loadedGame.addPlayer1Point();
+    if (this.loadedGame.getMaxScore() === this.loadedGame.player1points) {
+        this.stopGame();
+    }
   }
 
   addPlayer2Point(): void {
     this.loadedGame.addPlayer2Point();
+    if (this.loadedGame.getMaxScore() === this.loadedGame.player2points) {
+      this.stopGame();
+    }
   }
 
   reducePlayer1Point(): void {
@@ -58,5 +64,9 @@ export class GameService implements OnDestroy {
 
   ngOnDestroy(): void {
     clearTimeout(this.timeout);
+  }
+
+  getMaxScore(): number {
+    return this.loadedGame.getMaxScore();
   }
 }

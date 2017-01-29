@@ -64,15 +64,13 @@ countdown {
 }
 
 #player1-score {
-  font-size: 20px;
-  float: left;
-  margin-left: 50px;
-  margin-top: 400px;
+  position: absolute;
+  bottom: 15px;
+  left: 30px;
 }
 
 #player2-score {
-  float: right;
-  margin-right: 50px;
-  margin-top: 400px;
-  font-size: 20px;
+  position: absolute;
+  bottom: 15px;
+  right: 30px;
 }

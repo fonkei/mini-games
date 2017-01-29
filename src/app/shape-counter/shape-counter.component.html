@@ -10,8 +10,8 @@
   <div id="wanted-shape-text">Zähle alle {{getWantedShapeText()}}</div>
   <canvas #shapeCounterCanvas></canvas>
 
-  <div id="player1-score">{{gameService.getPlayer1Score()}}</div>
-  <div id="player2-score">{{gameService.getPlayer2Score()}}</div>
+  <game-score id="player1-score" [rate]="gameService.getPlayer1Score()" [max]="gameService.getMaxScore()"></game-score>
+  <game-score id="player2-score" [rate]="gameService.getPlayer2Score()" [max]="gameService.getMaxScore()"></game-score>
 </div>
 
 <countdown #startCountdown (countDownEnded)="onStartCountdownEnded()"></countdown>

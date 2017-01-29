@@ -33,7 +33,6 @@ export class AppComponent implements OnDestroy {
     this.keyUpSub = keyboardManager.keyUp.subscribe(bzrs => this.buzzers = bzrs);
 
     this.start();
-
   }
 
   private start(): void {

@@ -1,10 +1,10 @@
-import { MiniGamesPage } from './app.po';
+import { PartyGamesPage } from './app.po';
 
-describe('mini-games App', function() {
-  let page: MiniGamesPage;
+describe('party-games App', function() {
+  let page: PartyGamesPage;
 
   beforeEach(() => {
-    page = new MiniGamesPage();
+    page = new PartyGamesPage();
   });
 
   it('should display message saying app works', () => {

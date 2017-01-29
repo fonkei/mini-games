@@ -1,3 +1,4 @@
+import {max} from "rxjs/operator/max";
 export class Game {
   public name: string;
   public maxPoints: number;
@@ -32,5 +33,9 @@ export class Game {
   reducePlayer2Point(): void {
     if (this.player2points > 0)
       this.player2points--;
+  }
+
+  getMaxScore(): number {
+    return this.maxPoints;
   }
 }

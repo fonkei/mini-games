@@ -49,7 +49,7 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       this.buzzer2 = bzrs[1];
 
       if (!this.gameStarted && (this.buzzer1.red || this.buzzer2.red)) {
-        this.startCountdown.startTimer(5);
+        this.start();
       }
 
       if (this.buzzer1.red && this.isCountingEnabled) {
@@ -77,31 +77,36 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
     this.canvas.nativeElement.height = this.height;
     this.context = canvas.getContext("2d");
 
-    this.maxShapes = 80;
+    this.maxShapes = 60;
     this.shapes = [];
 
     this.tick();
   }
 
-  newGame(): void {
+  start(): void {
     this.gameStarted = true;
+    this.wantedShapeType = Math.floor(Math.random() * 2 + 1);
+    this.wantedShapeColor = Math.floor(Math.random() * 3);
+    this.startCountdown.startTimer(5);
+  }
 
+  newGame(): void {
     this.shapes = [];
     this.currShapeIndex = 0;
     this.player1Counter = 0;
     this.player2Counter = 0;
 
-    this.wantedShapeType = Math.floor(Math.random() * 2 + 1);
-    this.wantedShapeColor = Math.floor(Math.random() * 3);
-
     this.interval = setInterval(() => {
       if (this.currShapeIndex < this.maxShapes) {
         let type = Math.floor(Math.random() * 2 + 1);
         let color = Math.floor(Math.random() * 3);
-        let speedFactor = 10;
+        let speedFactor = 7;
 
         let shape = new Shape(this.context, this.width, this.height, this.shapes.length, type, color, speedFactor);
         this.shapes.push(shape);
+
+        if(this.wantedShapeType == type && this.wantedShapeColor == color)
+          console.log("JETZT");
 
         this.currShapeIndex++;
       }
@@ -114,7 +119,8 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
 
   startCounting(): void {
     this.isCountingEnabled = true;
-    this.countdown.startTimer(5);
+
+    this.countdown.startTimer(10);
   }
 
   onCountdownEnded(): void {
@@ -130,6 +136,9 @@ export class ShapeCounterComponent implements AfterViewInit, OnDestroy {
       this.gameService.addPlayer2Point();
     else
       this.gameService.reducePlayer2Point();
+
+    this.wantedShapeType = Math.floor(Math.random() * 2 + 1);
+    this.wantedShapeColor = Math.floor(Math.random() * 3);
 
     this.newGame();
   }
